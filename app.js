@@ -41,6 +41,7 @@ const roastCharacterText = {
 	granny: "Granny",
 	wrecker: "Wrecker",
 	ford_man: "Old Man Ford",
+	sling_bro: "Sling Bro",
 };
 
 const helpChars = {
@@ -128,6 +129,7 @@ function buildGameBoard() {
 		engineIcon.draggable = false;
 		engineIcon.style.cursor = "grab";
 		engineIcon.addEventListener("mousedown", onEngineMouseDown);
+		engineIcon.addEventListener("touchstart", onEngineTouchStart);
 		engineTray.appendChild(engineIcon);
 	});
 }
@@ -207,6 +209,81 @@ function onDocumentMouseUp(event) {
 	cleanupDrag();
 }
 
+function onEngineTouchStart(event) {
+	event.preventDefault();
+	resumeTimer();
+	startRatchet();
+
+	draggedEngine = event.currentTarget;
+	const touch = event.touches[0];
+	const rect = draggedEngine.getBoundingClientRect();
+	dragOffsetX = touch.clientX - rect.left;
+	dragOffsetY = touch.clientY - rect.top;
+
+	dragGhost = draggedEngine.cloneNode(true);
+	dragGhost.className = "drag-ghost";
+	Object.assign(dragGhost.style, {
+		position: "fixed",
+		left: `${rect.left}px`,
+		top: `${rect.top}px`,
+		width: `${rect.width}px`,
+		height: `${rect.height}px`,
+		pointerEvents: "none",
+		opacity: "0.8",
+		zIndex: "10000",
+		cursor: "grabbing",
+	});
+	document.body.appendChild(dragGhost);
+	draggedEngine.style.opacity = "0.35";
+
+	document.addEventListener("touchmove", onDocumentTouchMove);
+	document.addEventListener("touchend", onDocumentTouchEnd);
+}
+
+function onDocumentTouchMove(event) {
+	if (!dragGhost) {
+		return;
+	}
+	const touch = event.touches[0];
+	dragGhost.style.left = `${touch.clientX - dragOffsetX}px`;
+	dragGhost.style.top = `${touch.clientY - dragOffsetY}px`;
+
+	const element = document.elementFromPoint(touch.clientX, touch.clientY);
+	const hoverSlot = element?.closest(".car-slot");
+	if (currentHoverSlot && currentHoverSlot !== hoverSlot) {
+		currentHoverSlot.classList.remove("drag-over");
+		currentHoverSlot = null;
+	}
+	if (hoverSlot && hoverSlot !== currentHoverSlot) {
+		hoverSlot.classList.add("drag-over");
+		currentHoverSlot = hoverSlot;
+	}
+}
+
+function onDocumentTouchEnd(event) {
+	if (!draggedEngine) {
+		return;
+	}
+	stopRatchet();
+
+	const touch = event.changedTouches[0];
+	const element = document.elementFromPoint(touch.clientX, touch.clientY);
+	const carSlot = element?.closest(".car-slot");
+	if (carSlot) {
+		const engineKey = draggedEngine.dataset.engine;
+		const carKey = carSlot.dataset.car;
+		if (engineKey && carKey) {
+			if (state.carMatch[carKey] === engineKey) {
+				handleMatch(carSlot, engineKey);
+			} else {
+				handleFail(engineKey, carKey);
+			}
+		}
+	}
+
+	cleanupDrag();
+}
+
 function cleanupDrag() {
 	if (dragGhost && dragGhost.parentNode) {
 		dragGhost.parentNode.removeChild(dragGhost);
@@ -222,6 +299,8 @@ function cleanupDrag() {
 	}
 	document.removeEventListener("mousemove", onDocumentMouseMove);
 	document.removeEventListener("mouseup", onDocumentMouseUp);
+	document.removeEventListener("touchmove", onDocumentTouchMove);
+	document.removeEventListener("touchend", onDocumentTouchEnd);
 }
 
 function onEngineDragStart(event) {
@@ -469,8 +548,10 @@ function startGame() {
 		setMessage(
 			"Sling Bro: you reckin you can swap engines faster than me um hum?",
 		);
+		setRoastCharacter("sling_bro", true);
 		const introAudio = playAudio(audioPaths.start, false, () => {
 			setMessage("Go! Start swapping. Must beat Sling Bro!");
+			setRoastCharacter("sling_bro", false);
 			setTimMouth(false);
 			startCountdown();
 		});
