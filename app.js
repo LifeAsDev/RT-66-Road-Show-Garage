@@ -107,7 +107,7 @@ function buildGameBoard() {
 		carSlot.className = "car-slot";
 		carSlot.dataset.car = carKey;
 		console.log(carKey);
-		const carFile = carKey + ".png";
+		const carFile = carKey.toLowerCase() + ".png";
 		carSlot.innerHTML = `
 			<div class="car-image-wrap">
 				<img class="car-img" src="${assetPath("cars", carFile)}" alt="${carKey}" draggable="false" />
