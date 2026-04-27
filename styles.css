@@ -1,0 +1,303 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background: url("Game background/RT 66 garage.png") center center / cover
+		no-repeat;
+	min-height: 100vh;
+	color: white;
+	display: flex;
+	user-select: none;
+}
+
+.screen {
+	text-align: center;
+	width: 100%;
+	max-width: 1200px;
+	padding: 20px;
+	box-sizing: border-box;
+	margin: auto auto;
+}
+.screen p {
+	text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+.hidden {
+	display: none;
+}
+
+h1 {
+	font-size: 2.6em;
+	margin-bottom: 10px;
+	color: #ffd700;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+p {
+	margin: 10px auto 20px;
+	max-width: 700px;
+	line-height: 1.5;
+}
+
+button {
+	background-color: #fed801;
+	color: #111;
+	border: none;
+	padding: 15px 24px;
+	font-size: 1.1em;
+	border-radius: 6px;
+	cursor: pointer;
+	margin: 10px;
+	font-weight: 700;
+}
+
+#hud {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+#timer {
+	font-size: 2.2em;
+	color: #ff4444;
+	padding: 12px 18px;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 10px;
+	min-width: 160px;
+}
+
+#message {
+	flex: 1;
+	font-size: 1.05em;
+	text-align: left;
+	padding: 12px 18px;
+	background: rgba(0, 0, 0, 0.55);
+	border-radius: 10px;
+	min-width: 240px;
+}
+
+#game-area {
+	display: grid;
+	gap: 18px;
+}
+
+#car-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 16px;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 16px;
+}
+
+.car-slot {
+	position: relative;
+	background: rgba(255, 255, 255, 0.1);
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	border-radius: 14px;
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	backdrop-filter: blur(4px);
+}
+
+.car-image-wrap {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.car-slot.drag-over {
+	border-color: #ffd700;
+	box-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+}
+
+.car-img,
+.engine-icon,
+#tim-image,
+#roast-char {
+	user-select: none;
+	height: 80px;
+	width: auto;
+}
+
+.installed-engine {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60px;
+	max-width: 70%;
+	opacity: 0.95;
+	z-index: 2;
+	pointer-events: none;
+}
+
+img {
+	user-select: none;
+}
+
+.car-name {
+	font-size: 0.95em;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.engine-slot {
+	width: 100%;
+	height: 90px;
+	border: 2px dashed rgba(255, 255, 255, 0.3);
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+}
+
+#engine-tray {
+	display: grid;
+	grid-template-columns: repeat(8, minmax(0, 1fr));
+	gap: 12px;
+	padding: 12px;
+	background: rgba(0, 0, 0, 0.45);
+	border-radius: 16px;
+}
+
+.engine-icon {
+	width: 100%;
+	cursor: grab;
+	transition:
+		transform 0.15s ease,
+		opacity 0.25s ease;
+}
+
+.engine-icon:active {
+	cursor: grabbing;
+	transform: scale(1.03);
+}
+
+.engine-icon.matched {
+	opacity: 0.25;
+	pointer-events: none;
+}
+
+.character-panel {
+	padding: 16px;
+	background: rgba(0, 0, 0, 0.55);
+	border-radius: 16px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#tim-bubble {
+	font-size: 0.95em;
+	font-weight: 700;
+	margin-bottom: 12px;
+	padding: 10px 14px;
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 12px;
+}
+
+#tim-label {
+	margin-top: 12px;
+	font-size: 0.95em;
+	color: #ffd700;
+}
+
+#tim-image {
+	max-width: 160px;
+	border-radius: 12px;
+	box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+	height: 120px;
+}
+
+#roast-panel {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 14px;
+	border-radius: 16px;
+	margin-right: auto;
+}
+#roast-char {
+	height: 120px;
+}
+
+#roast-text {
+	flex: 1;
+	text-align: left;
+	font-size: 1.05em;
+}
+
+#tim-panel {
+	margin-right: auto;
+}
+.popup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.78);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.popup-content {
+	background: rgba(15, 15, 15, 0.98);
+	padding: 28px;
+	border-radius: 18px;
+	text-align: center;
+	max-width: 500px;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.popup-content h2 {
+	font-size: 2em;
+	margin-bottom: 14px;
+}
+
+.popup-content p {
+	font-size: 1.05em;
+	margin-bottom: 20px;
+}
+
+.popup-content button {
+	width: auto;
+}
+
+.hidden {
+	display: none !important;
+}
+
+@media (max-width: 900px) {
+	#car-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	#engine-tray {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 600px) {
+	#hud {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	#engine-tray {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}

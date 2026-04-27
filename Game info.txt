@@ -1,0 +1,66 @@
+8 cars float at top.
+8 engines float at bottom.
+
+RT 66 Road Show Garage is game background.
+
+Final overview-
+
+Player drags engine to car as countdown timer to game end runs.
+The Match: Engine touches car → Snap to car.
+
+The Fail: Wrong engine → Play "grind" sound.
+
+The Animation: Use PNG flipping for the faces.
+Mouth open appear talk, mouth closed etc
+and use sound bits of .ogg to make appear talking
+
+Must beat Sling bros time to win.
+If win get congrats
+Pop up cool you beat Sling Bro!
+
+If loose get roasted by OGs,Wrecker,Granny, OLD Man Ford.
+
+Tim Naylor is on screen and a help or game rules above his head.
+Player taps, countdown pauses and audio and open mouth closed mouth
+make him appear to talk explain game if they want click Tim Naylor.
+
+Ratchet Noise plays as they move engines to car.
+If wrong car get gear grind noise.
+
+At game start clock at zero on screen.
+Sling Bro says " you reckin you can swap engines faster than me um hum?" then
+clock starts and game player gets a "go or start swapping" warning as clock starts to
+countdown.
+
+Game Type: Static Logic Match (Drag & Drop)
+Core Logic Rule: Use the "car engine match list.txt" as the ONLY source of truth. Do not use real-world automotive logic. 
+
+Interaction Flow:
+
+    Input: User selects and drags an image from the Engine Tray.
+
+    Check (Collision): When the Engine image "touches" a Car image, check the filenames.
+
+    Validation: Does the Engine_Name match the assigned CAR in the match list? 
+
+Results:
+
+    MATCH (Success): * Snap: The Engine image disappears and "snaps" into position on the Car.
+
+        Audio: Play success.ogg.
+
+        Visual: Toggle character PNG to "Mouth Closed" state.
+
+    NO MATCH (Fail): * Bounce: The Engine image returns to its starting position in the tray.
+
+        Audio: Play grind.ogg.
+
+        Visual: Toggle character PNG to "Mouth Open" state (Roast Mode).
+
+Randomized Roasts:
+
+    When a "No Match" occurs, the game should randomly select one .ogg file from the Roasts folder (e.g., Granny_Roast, OldManFord_Roast, Wrecker_Roast).
+
+    The game must toggle the specific PNG character associated with that audio file (flip to "Mouth Open" while audio plays, then "Mouth Closed").
+
+End Goal: Once all 8 engines are successfully snapped into their specific cars, the game is complete.

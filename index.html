@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>RT-66 Road Show Garage</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div id="start-screen" class="screen">
+			<h1>RT-66 Road Show Garage</h1>
+			<p>Drag engines to the matching cars before the clock runs out.</p>
+			<button id="start-btn">Start Race</button>
+		</div>
+
+		<div id="game-screen" class="screen hidden">
+			<div id="hud">
+				<div id="timer">00:00</div>
+				<div id="message">
+					Tap Tim Naylor for help. Countdown pauses while he talks.
+				</div>
+			</div>
+
+			<div id="game-area">
+				<div id="car-grid"></div>
+				<div id="engine-tray"></div>
+				<div class="character-panel">
+					<div id="tim-panel" tabindex="0">
+						<img
+							id="tim-image"
+							src="Tim Naylor Help/tim_help_mouth_closed.png"
+							alt="Tim Naylor"
+						/>
+						<div id="tim-label">Tap Tim Naylor for rules</div>
+					</div>
+					<div id="roast-panel">
+						<img class="hidden" id="roast-char" src="" alt="Roast Character" />
+					</div>
+				</div>
+			</div>
+
+			<div id="result-popup" class="popup hidden">
+				<div class="popup-content">
+					<h2 id="result-title"></h2>
+					<p id="result-copy"></p>
+					<button id="restart-btn">Play Again</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="app.js"></script>
+	</body>
+</html>
