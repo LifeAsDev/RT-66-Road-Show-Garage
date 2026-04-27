@@ -112,7 +112,7 @@ function buildGameBoard() {
 			<div class="car-image-wrap">
 				<img class="car-img" src="${assetPath("cars", carFile)}" alt="${carKey}" draggable="false" />
 			</div>
-			<div class="car-name">${carKey.replace(/_/g, " ")}</div>
+			<div class="car-name">${carKey.replace(/_/g, " ").toLowerCase()}</div>
 		`;
 
 		carGrid.appendChild(carSlot);
