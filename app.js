@@ -408,7 +408,7 @@ function playRoast(character, roastUri) {
 	};
 }
 function handleFail(engineKey, carKey) {
-	playAudio(audioPaths.wrong);
+	playAudio(audioPaths.wrong, false, null, 0.2);
 	const roastUri = randomRoast();
 	const roastFile = roastUri.split("/").pop();
 	const roastChar = roastCharacterMap[roastFile] || "granny";
@@ -444,9 +444,10 @@ function setRoastCharacter(character, open) {
 	}
 }
 
-function playAudio(path, loop = false, onEnd) {
+function playAudio(path, loop = false, onEnd, volume = 1) {
 	const audio = new Audio(encodeURI(path));
 	audio.loop = loop;
+	audio.volume = volume;
 	audio.onended = () => {
 		if (onEnd) {
 			onEnd();
@@ -500,7 +501,7 @@ function startCountdown() {
 	if (state.timerInterval) {
 		clearInterval(state.timerInterval);
 	}
-	state.timerSeconds = 6000;
+	state.timerSeconds = 20;
 	updateTimerDisplay();
 	state.timerInterval = setInterval(() => {
 		state.timerSeconds -= 1;
