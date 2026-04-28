@@ -468,7 +468,7 @@ img {
 	.car-slot {
 		padding: 3px;
 		gap: 1px;
-		height: clamp(120px, 25vw, 160px);
+		height: auto;
 	}
 
 	.car-image-wrap {
@@ -528,5 +528,14 @@ img {
 	.popup-content p {
 		font-size: clamp(0.8em, 2vw, 0.95em);
 		margin-bottom: 12px;
+	}
+	.engine-icon {
+		height: 40px !important;
+		width: 100%;
+		object-fit: fill;
+	}
+	#engine-tray {
+		justify-content: center !important;
+		align-items: center !important;
 	}
 }
