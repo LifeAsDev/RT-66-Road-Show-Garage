@@ -1,10 +1,18 @@
-body {
+body,
+html {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+body {
 	background: url("Game background/RT 66 garage.png") center center / cover
 		no-repeat;
-	min-height: 100vh;
+	background-attachment: fixed;
 	color: white;
 	display: flex;
 	user-select: none;
@@ -13,10 +21,18 @@ body {
 .screen {
 	text-align: center;
 	width: 100%;
-	max-width: 1200px;
-	padding: 20px;
+	height: 100%;
+	padding: clamp(8px, 2vw, 12px);
 	box-sizing: border-box;
-	margin: auto auto;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	max-width: 100%;
+}
+
+#start-screen {
+	justify-content: center;
+	align-items: center;
 }
 .screen p {
 	text-shadow: 0 0 10px rgba(0, 0, 0, 1);
@@ -27,28 +43,30 @@ body {
 }
 
 h1 {
-	font-size: 2.6em;
-	margin-bottom: 10px;
+	font-size: clamp(1.8em, 6vw, 2.6em);
+	margin: 8px 0;
 	color: #ffd700;
 	text-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }
 
 p {
-	margin: 10px auto 20px;
+	margin: 6px auto 12px;
 	max-width: 700px;
 	line-height: 1.5;
+	font-size: clamp(0.9em, 3vw, 1em);
 }
 
 button {
 	background-color: #fed801;
 	color: #111;
 	border: none;
-	padding: 15px 24px;
-	font-size: 1.1em;
+	padding: clamp(10px, 2vw, 15px) clamp(16px, 4vw, 24px);
+	font-size: clamp(0.95em, 3vw, 1.1em);
 	border-radius: 6px;
 	cursor: pointer;
-	margin: 10px;
+	margin: 8px;
 	font-weight: 700;
+	width: fit-content;
 }
 
 #hud {
@@ -56,41 +74,47 @@ button {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
-	gap: 12px;
-	margin-bottom: 16px;
+	gap: 8px;
+	margin-bottom: 10px;
+	width: 100%;
 }
 
 #timer {
-	font-size: 2.2em;
+	font-size: clamp(1.5em, 4vw, 2.2em);
 	color: #ff4444;
-	padding: 12px 18px;
+	padding: clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 18px);
 	background: rgba(0, 0, 0, 0.5);
 	border-radius: 10px;
-	min-width: 160px;
+	min-width: clamp(100px, 20vw, 160px);
+	white-space: nowrap;
 }
 
 #message {
 	flex: 1;
-	font-size: 1.05em;
-	text-align: left;
-	padding: 12px 18px;
+	font-size: clamp(0.85em, 2.5vw, 1.05em);
+	text-align: center;
+	padding: clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 18px);
 	background: rgba(0, 0, 0, 0.55);
 	border-radius: 10px;
-	min-width: 240px;
+	min-width: 140px;
 }
 
 #game-area {
-	display: grid;
-	gap: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: space-between;
 }
 
 #car-grid {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 16px;
-	padding: 10px;
+	gap: clamp(6px, 1.5vw, 12px);
+	padding: clamp(6px, 1vw, 8px);
 	background: rgba(0, 0, 0, 0.4);
-	border-radius: 16px;
+	border-radius: 12px;
+	overflow: auto;
+	min-height: 0;
 }
 
 .car-slot {
@@ -98,19 +122,23 @@ button {
 	background: rgba(255, 255, 255, 0.1);
 	border: 2px solid rgba(255, 255, 255, 0.2);
 	border-radius: 14px;
-	padding: 8px;
+	padding: 6px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 8px;
+	gap: 4px;
 	backdrop-filter: blur(4px);
+	justify-content: center;
+	height: 130px;
 }
 
 .car-image-wrap {
 	position: relative;
 	width: 100%;
+	height: 80%;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .car-slot.drag-over {
@@ -123,8 +151,9 @@ button {
 #tim-image,
 #roast-char {
 	user-select: none;
-	height: 80px;
+	height: 100%;
 	width: auto;
+	max-width: 100%;
 }
 
 .installed-engine {
@@ -132,11 +161,12 @@ button {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 60px;
+	width: 60%;
 	max-width: 70%;
 	opacity: 0.95;
 	z-index: 2;
 	pointer-events: none;
+	height: auto;
 }
 
 img {
@@ -144,15 +174,16 @@ img {
 }
 
 .car-name {
-	font-size: 0.95em;
+	font-size: clamp(0.65em, 1.5vw, 0.95em);
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
+	line-height: 1.1;
 }
 
 .engine-slot {
 	width: 100%;
-	height: 90px;
+	height: clamp(90px, 20vw, 110px);
 	border: 2px dashed rgba(255, 255, 255, 0.3);
 	border-radius: 12px;
 	display: flex;
@@ -165,10 +196,11 @@ img {
 #engine-tray {
 	display: grid;
 	grid-template-columns: repeat(8, minmax(0, 1fr));
-	gap: 12px;
-	padding: 12px;
+	gap: clamp(6px, 1vw, 10px);
+	padding: clamp(6px, 1vw, 10px);
 	background: rgba(0, 0, 0, 0.45);
-	border-radius: 16px;
+	border-radius: 12px;
+	flex-shrink: 0;
 }
 
 .engine-icon {
@@ -190,57 +222,80 @@ img {
 }
 
 .character-panel {
-	padding: 16px;
+	padding: clamp(8px, 1.5vw, 12px);
 	background: rgba(0, 0, 0, 0.55);
-	border-radius: 16px;
+	border-radius: 12px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
+	gap: clamp(8px, 1.5vw, 12px);
+}
+
+.character-panel img {
+	max-height: 120px;
+	width: auto;
+	border-radius: 12px;
+	box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
 }
 
 #tim-bubble {
-	font-size: 0.95em;
+	font-size: clamp(0.75em, 2vw, 0.95em);
 	font-weight: 700;
-	margin-bottom: 12px;
-	padding: 10px 14px;
+	margin-bottom: 8px;
+	padding: clamp(6px, 1vw, 10px) clamp(10px, 1.5vw, 14px);
 	background: rgba(255, 255, 255, 0.08);
 	border-radius: 12px;
 }
 
 #tim-label {
-	margin-top: 12px;
-	font-size: 0.95em;
+	margin-top: 6px;
+	font-size: clamp(0.7em, 2vw, 0.95em);
 	color: #ffd700;
+	line-height: 1.2;
 }
 
 #tim-image {
-	max-width: 160px;
+	max-width: clamp(80px, 20vw, 160px);
 	border-radius: 12px;
 	box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
-	height: 120px;
+	height: auto;
 }
 
 #roast-panel {
 	display: flex;
 	align-items: center;
-	gap: 12px;
-	padding: 14px;
+	gap: clamp(8px, 2vw, 12px);
+	padding: clamp(10px, 1.5vw, 14px);
 	border-radius: 16px;
+	margin-left: auto;
 	margin-right: auto;
 }
 #roast-char {
-	height: 120px;
+	width: auto;
 }
-
+.engine-icon,
+#tim-image,
+#roast-char {
+	user-select: none;
+	height: 100%;
+	width: auto;
+	max-width: 100%;
+	object-fit: contain;
+}
 #roast-text {
 	flex: 1;
 	text-align: left;
-	font-size: 1.05em;
+	font-size: clamp(0.85em, 2.5vw, 1.05em);
 }
 
 #tim-panel {
-	margin-right: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
 }
+
 .popup {
 	position: fixed;
 	top: 0;
@@ -251,26 +306,28 @@ img {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 20px;
+	padding: 16px;
+	z-index: 50000;
 }
 
 .popup-content {
 	background: rgba(15, 15, 15, 0.98);
-	padding: 28px;
+	padding: clamp(20px, 4vw, 28px);
 	border-radius: 18px;
 	text-align: center;
-	max-width: 500px;
+	max-width: 90vw;
+	width: 500px;
 	box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
 }
 
 .popup-content h2 {
-	font-size: 2em;
-	margin-bottom: 14px;
+	font-size: clamp(1.6em, 5vw, 2em);
+	margin-bottom: 12px;
 }
 
 .popup-content p {
-	font-size: 1.05em;
-	margin-bottom: 20px;
+	font-size: clamp(0.95em, 2.5vw, 1.05em);
+	margin-bottom: 16px;
 }
 
 .popup-content button {
@@ -281,23 +338,195 @@ img {
 	display: none !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
 	#car-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	#engine-tray {
+		grid-template-columns: repeat(8, minmax(0, 1fr));
+	}
+
+	.character-panel {
+		flex-direction: row;
+	}
+}
+
+@media (max-width: 768px) {
+	body,
+	html {
+		overflow: hidden;
+	}
+
+	.screen {
+		padding: clamp(6px, 1.5vw, 10px);
+	}
+
+	#hud {
+		gap: 6px;
+		margin-bottom: 6px;
+	}
+
+	#game-area {
+		gap: clamp(4px, 1vw, 6px);
+	}
+
+	#car-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(4px, 1vw, 8px);
+		padding: clamp(4px, 0.8vw, 6px);
+		border-radius: 8px;
+	}
+
+	#engine-tray {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+		gap: clamp(4px, 0.8vw, 6px);
+		padding: clamp(4px, 0.8vw, 6px);
+		border-radius: 8px;
+	}
+
+	.character-panel {
+		gap: 6px;
+		padding: clamp(6px, 1vw, 8px);
+		border-radius: 8px;
+	}
+
+	#tim-panel {
+		width: 100%;
+	}
+
+	#roast-panel {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+@media (max-width: 480px) {
+	body,
+	html {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.screen {
+		padding: 2px;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	h1 {
+		font-size: clamp(1.5em, 5vw, 2em);
+		margin: 4px 0;
+	}
+
+	p {
+		margin: 4px auto 6px;
+		font-size: clamp(0.8em, 2.5vw, 0.9em);
+	}
+
+	button {
+		padding: clamp(8px, 1.5vw, 12px) clamp(12px, 3vw, 18px);
+		font-size: clamp(0.85em, 2.5vw, 0.95em);
+		margin: 4px;
+	}
+
+	#hud {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 4px;
+		margin-bottom: 2px;
+	}
+
+	#timer {
+		width: 100%;
+		text-align: center;
+		font-size: clamp(1.2em, 3.5vw, 1.8em);
+		padding: clamp(6px, 1vw, 8px) clamp(8px, 1.5vw, 12px);
+	}
+
+	#message {
+		width: 100%;
+		min-width: unset;
+		text-align: center;
+		font-size: clamp(0.75em, 2vw, 0.85em);
+		padding: clamp(6px, 1vw, 8px) clamp(8px, 1.5vw, 12px);
+	}
+
+	#game-area {
+		gap: 14px;
+	}
+
+	#car-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 2px;
+		padding: 2px;
+		border-radius: 6px;
+		justify-content: center;
+	}
+
+	.car-slot {
+		padding: 3px;
+		gap: 1px;
+		height: clamp(120px, 25vw, 160px);
+	}
+
+	.car-image-wrap {
+		height: 70%;
+	}
+	.car-img {
+		width: auto;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.car-name {
+		font-size: clamp(0.55em, 1.2vw, 0.7em);
+		line-height: 1;
 	}
 
 	#engine-tray {
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-	}
-}
-
-@media (max-width: 600px) {
-	#hud {
-		flex-direction: column;
-		align-items: stretch;
+		gap: 2px;
+		padding: 3px;
+		border-radius: 6px;
 	}
 
-	#engine-tray {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	.character-panel {
+		align-items: center;
+		gap: 2px;
+		padding: 4px;
+		border-radius: 6px;
+	}
+
+	#tim-image {
+		max-width: 70px;
+	}
+
+	#roast-char {
+		max-height: 80px;
+	}
+
+	#tim-label {
+		font-size: clamp(0.65em, 1.8vw, 0.8em);
+	}
+
+	.popup {
+		padding: 8px;
+	}
+
+	.popup-content {
+		padding: clamp(12px, 3vw, 16px);
+		width: 90vw;
+	}
+
+	.popup-content h2 {
+		font-size: clamp(1.3em, 4vw, 1.6em);
+		margin-bottom: 8px;
+	}
+
+	.popup-content p {
+		font-size: clamp(0.8em, 2vw, 0.95em);
+		margin-bottom: 12px;
 	}
 }

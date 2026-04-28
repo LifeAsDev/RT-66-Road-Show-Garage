@@ -375,7 +375,8 @@ function handleMatch(carSlot, engineKey) {
 		`MATCH! ${engineKey.replace(/_/g, " ")} snapped into ${carSlot.dataset.car.replace(/_/g, " ")}.`,
 	);
 	setTimMouth(false);
-	playAudio(audioPaths.success, false, () => setTimMouth(false));
+	/* 	playAudio(audioPaths.success, false, () => setTimMouth(false));
+	 */
 	if (state.matched.size === state.engineList.length) {
 		completeGame(true);
 	}
@@ -499,7 +500,7 @@ function startCountdown() {
 	if (state.timerInterval) {
 		clearInterval(state.timerInterval);
 	}
-	state.timerSeconds = 60;
+	state.timerSeconds = 6000;
 	updateTimerDisplay();
 	state.timerInterval = setInterval(() => {
 		state.timerSeconds -= 1;
